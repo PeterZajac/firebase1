@@ -79,6 +79,11 @@ function App() {
   const uploadFile = async () => {
     if (!fileUpload) return;
     const filesFolderRef = ref(storage, `projectFiles/${fileUpload.name}`);
+    try {
+      await uploadBytes(filesFolderRef, fileUpload);
+    } catch (e) {
+      console.error(e);
+    }
   };
   return (
     <div className="App">
@@ -121,7 +126,7 @@ function App() {
       </div>
       <div>
         <input type="file" onChange={(e) => setFileUpload(e.target.files[0])} />
-        <button onClick={uploadFile()}>Upload file</button>
+        <button onClick={uploadFile}>Upload file</button>
       </div>
     </div>
   );
